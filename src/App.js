@@ -1,12 +1,7 @@
-import React, {Component} from 'react';
-import axios from 'axios';
-import Config from './config';
+import React, { Component } from 'react';
 import Composers from './components/composers';
 import { toTitleCase } from './utils';
-import FileSaver from 'file-saver';
-
-
-axios.defaults.baseURL = Config.composerService.baseUrl;
+import { getAllComposers, generateMelodyByComposer } from './services/composer';
 
 
 class App extends Component {
@@ -20,33 +15,15 @@ class App extends Component {
       .sort((a, b) => a.name.localeCompare(b.name))
   }
 
-  getAllComposers() {
-    return axios.get('/composers').then(({ data }) => data);
-  }
-
-  generateMelodyFromComposer(composerName) {
-    // TODO: fill the body with input melody lol (it will be retrieved from state i guess)
-    const body = {};
-    return axios({
-      method: 'post',
-      url: `/composers/${composerName}/generate`,
-      data: body,
-      responseType: 'blob'
-    }).then(({ data }) => {
-      const path = 'midi.mid'
-      FileSaver.saveAs(fileData, fileName);
-    });
-  }
-
   componentDidMount() {
-    this.getAllComposers().then(composers => {
-        this.setState({ composers: this.formatComposers(composers) })
+    getAllComposers().then(composers => {
+      this.setState({ composers: this.formatComposers(composers) })
     })
   }
 
-  render () {
+  render() {
     return (
-      <Composers composers={this.state.composers} melodyGenerator={this.generateMelodyFromComposer} />
+      <Composers composers={this.state.composers} melodyGenerator={generateMelodyByComposer} />
     );
   }
 }
