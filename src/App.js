@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Composers from './components/composers';
+import Piano from './components/piano/piano';
 import { toTitleCase } from './utils';
 import { getAllComposers, generateMelodyByComposer } from './services/composer';
 
@@ -23,7 +24,10 @@ class App extends Component {
 
   render() {
     return (
-      <Composers composers={this.state.composers} melodyGenerator={generateMelodyByComposer} />
+      <div>
+        <Piano />
+        <Composers composers={this.state.composers} melodyGenerator={generateMelodyByComposer} />
+      </div>
     );
   }
 }
