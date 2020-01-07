@@ -3,7 +3,7 @@ import Composers from './components/composers';
 import Piano from './components/piano/piano';
 import { toTitleCase } from './utils';
 import { getAllComposers, generateMelodyByComposer } from './services/composer';
-
+import { Container } from 'react-bootstrap';
 
 class App extends Component {
   state = {
@@ -24,10 +24,10 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <Piano />
         <Composers composers={this.state.composers} melodyGenerator={generateMelodyByComposer} />
-      </div>
+      </Container>
     );
   }
 }

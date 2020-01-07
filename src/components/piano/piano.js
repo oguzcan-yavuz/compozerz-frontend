@@ -1,10 +1,13 @@
 import React from 'react';
 import _ from 'lodash';
 import { KeyboardShortcuts, MidiNumbers } from 'react-piano';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlay, faStop, faUndo, faUndoAlt } from '@fortawesome/free-solid-svg-icons'
 import 'react-piano/dist/styles.css';
 
 import SoundfontProvider from './SoundfontProvider';
 import PianoWithRecording from './PianoWithRecording';
+import { Row, Col, Button } from 'react-bootstrap';
 
 // webkitAudioContext fallback needed to support Safari
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -102,35 +105,49 @@ class Piano extends React.Component {
   render() {
     return (
       <div>
-        <h1 className="h3">react-piano recording + playback demo</h1>
-        <div className="mt-5">
+        <Row>
+          <Col style={{textAlign: 'center', margin: '20px'}}>
+            <h1>Record a melody first</h1>
+          </Col>
+        </Row>
+        
+        <Row>
+          <Col className='d-flex justify-content-center'>
           <SoundfontProvider
-            instrumentName="acoustic_grand_piano"
-            audioContext={audioContext}
-            hostname={soundfontHostname}
-            render={({ isLoading, playNote, stopNote }) => (
-              <PianoWithRecording
-                recording={this.state.recording}
-                setRecording={this.setRecording}
-                noteRange={noteRange}
-                width={300}
-                playNote={playNote}
-                stopNote={stopNote}
-                disabled={isLoading}
-                keyboardShortcuts={keyboardShortcuts}
+                instrumentName="acoustic_grand_piano"
+                audioContext={audioContext}
+                hostname={soundfontHostname}
+                render={({ isLoading, playNote, stopNote }) => (
+                  <PianoWithRecording
+                    recording={this.state.recording}
+                    setRecording={this.setRecording}
+                    noteRange={noteRange}
+                    width={800}
+                    playNote={playNote}
+                    stopNote={stopNote}
+                    disabled={isLoading}
+                    keyboardShortcuts={keyboardShortcuts}
+                  />
+                )}
               />
-            )}
-          />
-        </div>
-        <div className="mt-5">
-          <button onClick={this.onClickPlay}>Play</button>
-          <button onClick={this.onClickStop}>Stop</button>
-          <button onClick={this.onClickClear}>Clear</button>
-        </div>
-        <div className="mt-5">
-          <strong>Recorded notes</strong>
-          <div>{JSON.stringify(this.state.recording.events)}</div>
-        </div>
+          </Col>
+        </Row>
+       
+        <Row>
+          <Col style={{textAlign: 'center', margin: '30px'}}>
+            <Button variant="outline-success" onClick={this.onClickPlay}> <FontAwesomeIcon icon={faPlay}/> Play </Button>
+            <Button variant="outline-danger" onClick={this.onClickStop}> <FontAwesomeIcon icon={faStop}/> Stop</Button>
+            <Button variant="outline-info" onClick={this.onClickClear}> <FontAwesomeIcon icon={faUndoAlt}/> Clear</Button>
+          </Col>
+        </Row>    
+          
+        <Row>
+          <Col style={{textAlign: 'center'}}>
+              <strong>Recorded notes</strong>
+              <div>{JSON.stringify(this.state.recording.events)}</div>
+          </Col>
+        </Row>  
+          
       </div>
     );
   }
