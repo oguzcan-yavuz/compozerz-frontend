@@ -6,7 +6,7 @@ const config = {
     },
     development: {
         composerService: {
-            baseUrl: 'http://localhost:5000',
+            baseUrl: 'http://127.0.0.1:5000',
         }
     }
 }

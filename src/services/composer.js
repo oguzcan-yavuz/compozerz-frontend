@@ -7,9 +7,8 @@ export const getAllComposers = () => {
   return axios.get('/composers').then(({ data }) => data);
 }
 
-export const generateMelodyByComposer = (composerName) => {
-  // TODO: fill the body with input melody lol (it will be retrieved from state i guess)
-  const body = {};
+export const generateMelodyByComposer = (composerName, noteSequence) => {
+  const body = { noteSequence }
 
   return axios({
     method: 'post',

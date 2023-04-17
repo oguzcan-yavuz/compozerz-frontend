@@ -11,6 +11,7 @@ class PianoWithRecording extends React.Component {
 
   state = {
     keysDown: {},
+    // TODO: yvz fix this, it ignores the actual note duration
     noteDuration: DEFAULT_NOTE_DURATION,
   };
 

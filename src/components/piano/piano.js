@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay, faStop, faUndo, faUndoAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPlay, faStop, faUndoAlt } from '@fortawesome/free-solid-svg-icons'
 import 'react-piano/dist/styles.css';
 
 import SoundfontProvider from './SoundfontProvider';
@@ -52,6 +52,8 @@ class Piano extends React.Component {
     this.setState({
       recording: Object.assign({}, this.state.recording, value),
     });
+    window.recording = this.state.recording
+    window._audioContext = audioContext
   };
 
   onClickPlay = () => {
@@ -110,7 +112,7 @@ class Piano extends React.Component {
             <h1>Record a melody first</h1>
           </Col>
         </Row>
-        
+
         <Row>
           <Col className='d-flex justify-content-center'>
           <SoundfontProvider
@@ -132,22 +134,22 @@ class Piano extends React.Component {
               />
           </Col>
         </Row>
-       
+
         <Row>
           <Col style={{textAlign: 'center', margin: '30px'}}>
             <Button variant="outline-success" onClick={this.onClickPlay}> <FontAwesomeIcon icon={faPlay}/> Play </Button>
             <Button variant="outline-danger" onClick={this.onClickStop}> <FontAwesomeIcon icon={faStop}/> Stop</Button>
             <Button variant="outline-info" onClick={this.onClickClear}> <FontAwesomeIcon icon={faUndoAlt}/> Clear</Button>
           </Col>
-        </Row>    
-          
+        </Row>
+
         <Row>
           <Col style={{textAlign: 'center'}}>
               <strong>Recorded notes</strong>
               <div>{JSON.stringify(this.state.recording.events)}</div>
           </Col>
-        </Row>  
-          
+        </Row>
+
       </div>
     );
   }
